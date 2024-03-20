@@ -1,23 +1,21 @@
-git2know
-========
+# git2know
 
-Git dashboard to supply information about all local git repositories.  
+Git dashboard to supply information about all local git repositories.
 
-Getting started
----------------
+## Getting started
 
 The current version finds all local git repositories and prints out a list of the respective status of each repository, differentiating between uncommited, unpushed and up-to-date.
 
 1. Install python3.6.
-1. Install python dependencies.
+2. Install python dependencies.
     ```
     sudo pip3 install -r requirements.txt
     ```
-1. Copy `git2know` to a directory contained in `$PATH`.
+3. Copy `git2know` to a directory contained in `$PATH`.
     ```
     sudo cp git2know /usr/local/bin/
     ```
-1. Run git2know.
+4. Run git2know.
     ```
     git2know
     * (1/2) Creating index database
@@ -34,10 +32,9 @@ The current version finds all local git repositories and prints out a list of th
     => ⇡  uncommited changes
     => ⤋  changes on remote (not yet implemented)
     ```
-1. Profit!
+5. Profit!
 
-How it works
-------------
+## How it works
 
 git2know uses
 
@@ -50,15 +47,14 @@ The first and most useful idea of git2know was born since I am using multiple co
 
 The application creates an mlocate database in your default cache directory (`$HOME/.cache/mlocate.db`). This database is updated on every run. The way mlocate works only changes will be comitted to the database on each run so the first run of the application might take some seconds or minutes depending on the size of your home directory. The mlocate database is not limited to this application and only stores an index of all files contained in your home directory. You are free to use this database with other applications relying on mlocate.
 
-Goals
------
+## Goals
 
+* get an overview of all git repositories on the system
+* provide a query language for filtering repositories and finding information
 * find all git repositories on the local machine with unpushed changes
 * automatically push all changes to a special (new) branch on shutdown (like hooking into the procedure)
 * automatically fetch or notify me about such branches on all local git repositories on startup so I know where I left working
 
-License
--------
+## License
 
-Usually MIT, but may also be AGPLv3 - need some time to read about the new license - it will be of course open source, and free for private usage.
-
+MIT
