@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
+from subprocess import check_call, check_output
 import os
 import re
+import shutil
 import ui
-from subprocess import check_call, check_output
 
 HOME = os.environ["HOME"]
 INDEXDB = HOME + "/.cache/mlocate.db"
@@ -42,12 +43,17 @@ def main():
     ui.info_count(0, 2, "Creating index database")
     check_call(["updatedb", "-l0", "-U", HOME, "-o", INDEXDB])
     ui.info_count(1, 2, "Searching for git repositores")
-    repo_paths = (
-        check_output(["mlocate", "-q", "-d", INDEXDB, "-b", "*.git"])
-        .decode()
-        .strip()
-        .split("\n")
-    )
+    common_args = ["-d", INDEXDB, "-r", "^.*/.git$"]
+    if shutil.which("mlocate"):
+        search_cmd = ["mlocate", "-q"]
+    elif shutil.which("locate"):
+        search_cmd = ["locate"]
+    else:
+        ui.error(
+            "No binary for reading the mlocate database found."
+            "Please install mlocate or locate."
+        )
+    repo_paths = check_output(search_cmd + common_args).decode().strip().split("\n")
     ui.info_1("Checking status")
     for i, path in enumerate(repo_paths):
         repo = Repository(path)
