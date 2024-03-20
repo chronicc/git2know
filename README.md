@@ -6,18 +6,11 @@ Git dashboard to supply information about all local git repositories.
 
 The current version finds all local git repositories and prints out a list of the respective status of each repository, differentiating between uncommited, unpushed and up-to-date.
 
-1. Install python3.6.
-2. Install python dependencies.
+- Install [mise](https://mise.jdx.dev/getting-started.html)
+- Run `mise run pip:install`
+- Run `./git2know`
     ```
-    sudo pip3 install -r requirements.txt
-    ```
-3. Copy `git2know` to a directory contained in `$PATH`.
-    ```
-    sudo cp git2know /usr/local/bin/
-    ```
-4. Run git2know.
-    ```
-    git2know
+    ./git2know
     * (1/2) Creating index database
     * (2/2) Searching for git repositores
     :: Checking status
@@ -32,7 +25,6 @@ The current version finds all local git repositories and prints out a list of th
     => ⇡  uncommited changes
     => ⤋  changes on remote (not yet implemented)
     ```
-5. Profit!
 
 ## How it works
 
