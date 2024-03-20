@@ -25,7 +25,9 @@ class Repository:
 
     def update(self):
         self.branch = (
-            check_output(["git", "branch", "--show-current", "--no-color"])
+            check_output(
+                ["git", "branch", "--show-current", "--no-color"], cwd=self.path
+            )
             .decode()
             .strip()
         )
