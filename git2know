@@ -15,14 +15,20 @@ SYMBOL_UNPULLED = ui.UnicodeSequence(ui.darkblue, "⤋", "-")
 
 class Repository:
 
-    path = ""
-    status = ""
+    branch = None
+    path = None
+    status = None
 
     def __init__(self, path):
         self.path = os.path.split(path)[0]
         self.update()
 
     def update(self):
+        self.branch = (
+            check_output(["git", "branch", "--show-current", "--no-color"])
+            .decode()
+            .strip()
+        )
         status = (
             check_output(["git", "status", "--porcelain"], cwd=self.path)
             .decode()
@@ -57,12 +63,13 @@ def main():
     ui.info_1("Checking status")
     for i, path in enumerate(repo_paths):
         repo = Repository(path)
+        branch = f"[{repo.branch}]"
         if repo.status == "uncommited":
-            ui.info_count(i, len(repo_paths), SYMBOL_UNCOMMITED, path)
+            ui.info_count(i, len(repo_paths), SYMBOL_UNCOMMITED, branch, path)
         elif repo.status == "unpushed":
-            ui.info_count(i, len(repo_paths), SYMBOL_UNPUSHED, path)
+            ui.info_count(i, len(repo_paths), SYMBOL_UNPUSHED, branch, path)
         else:
-            ui.info_count(i, len(repo_paths), ui.check, path)
+            ui.info_count(i, len(repo_paths), ui.check, branch, path)
     ui.info_2("Key:")
     ui.info_2(ui.check, " up-to-date")
     ui.info_2(SYMBOL_UNPUSHED, " unpushed changes")
