@@ -8,7 +8,7 @@ import ui
 
 HOME = os.environ["HOME"]
 INDEXDB = HOME + "/.cache/mlocate.db"
-SYMBOL_UNCOMMITED = ui.UnicodeSequence(ui.darkred, "⇡", "#")
+SYMBOL_UNCOMMITED = ui.UnicodeSequence(ui.darkred, "⚙", "#")
 SYMBOL_UNPUSHED = ui.UnicodeSequence(ui.darkyellow, "⤊", "+")
 SYMBOL_UNPULLED = ui.UnicodeSequence(ui.darkblue, "⤋", "-")
 
