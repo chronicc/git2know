@@ -1,1 +1,1 @@
-python-cli-ui
+cli-ui
