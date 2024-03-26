@@ -62,7 +62,8 @@ def main():
             "Please install mlocate or locate."
         )
     repo_paths = check_output(search_cmd + common_args).decode().strip().split("\n")
-    ui.info_1("Checking status")
+    ui.info("")
+    ui.info_section("Repositories")
     for i, path in enumerate(repo_paths):
         repo = Repository(path)
         branch = f"[{repo.branch}]"
@@ -72,11 +73,12 @@ def main():
             ui.info_count(i, len(repo_paths), SYMBOL_UNPUSHED, branch, path)
         else:
             ui.info_count(i, len(repo_paths), ui.check, branch, path)
-    ui.info_2("Key:")
-    ui.info_2(ui.check, " up-to-date")
-    ui.info_2(SYMBOL_UNPUSHED, " unpushed changes")
-    ui.info_2(SYMBOL_UNCOMMITED, " uncommited changes")
-    ui.info_2(SYMBOL_UNPULLED, " changes on remote (not yet implemented)")
+    ui.info("")
+    ui.info_section("Key")
+    ui.info(ui.check, " up-to-date")
+    ui.info(SYMBOL_UNPUSHED, " unpushed changes")
+    ui.info(SYMBOL_UNCOMMITED, " uncommited changes")
+    ui.info(SYMBOL_UNPULLED, " unpulled changes (not yet implemented)")
 
 
 if __name__ == "__main__":
