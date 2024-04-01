@@ -1,2 +1,2 @@
-cli-ui
 GitPython
+textual
