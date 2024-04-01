@@ -1,0 +1,18 @@
+[project]
+name = "git2know"
+version = "0.0.1"
+authors = [
+    { name="Thomas Steinert", email="hello@chroni.cc" },
+]
+description = "Provide an overview of all git repositories in your home directory."
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Linux",
+]
+
+[project.urls]
+Homepage = "https://github.com/chronicc/git2know"
+Issues = "https://github.com/chronicc/git2know/issues"
