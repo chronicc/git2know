@@ -3,19 +3,11 @@
 from git import GitCmdObjectDB, Repo
 from git2know import HOME, INDEXDB, SYMBOL_CLEAN, SYMBOL_DIRTY, ui
 from subprocess import check_call, check_output
-import cli_ui as ui
-import os
 import shutil
 
 
-HOME = os.environ["HOME"]
-INDEXDB = HOME + "/.cache/mlocate.db"
-SYMBOL_UNCOMMITED = ui.UnicodeSequence(ui.darkred, "⚙", "#")
-SYMBOL_UNPUSHED = ui.UnicodeSequence(ui.darkyellow, "⤊", "+")
-SYMBOL_UNPULLED = ui.UnicodeSequence(ui.darkblue, "⤋", "-")
-
-
 def main():
+    ui.info("Updating index database")
     check_call(
         [
             "updatedb",
@@ -29,6 +21,7 @@ def main():
             "0",
         ]
     )
+    ui.info("Searching for git repositores")
     common_args = ["-d", INDEXDB, "-r", "^.*/.git$"]
     if shutil.which("mlocate"):
         search_cmd = ["mlocate", "-q"]
