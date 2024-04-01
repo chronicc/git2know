@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from git import GitCmdObjectDB, Repo
+from git2know import HOME, INDEXDB, SYMBOL_CLEAN, SYMBOL_DIRTY, ui
 from subprocess import check_call, check_output
 import cli_ui as ui
 import os
