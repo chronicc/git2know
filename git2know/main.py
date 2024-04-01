@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from git2know.classes.repository import Repository
+from git import GitCmdObjectDB, Repo
 from subprocess import check_call, check_output
 import cli_ui as ui
 import os
@@ -32,20 +32,25 @@ def main():
     ui.info("")
     ui.info_section("Repositories")
     for i, path in enumerate(repo_paths):
-        repo = Repository(path)
-        branch = f"[{repo.branch}]"
-        if repo.status == "uncommited":
-            ui.info_count(i, len(repo_paths), SYMBOL_UNCOMMITED, branch, path)
-        elif repo.status == "unpushed":
-            ui.info_count(i, len(repo_paths), SYMBOL_UNPUSHED, branch, path)
+        repo = Repo(path, odbt=GitCmdObjectDB)
+
+        if repo.is_dirty():
+            status = SYMBOL_DIRTY
         else:
-            ui.info_count(i, len(repo_paths), ui.check, branch, path)
-    ui.info("")
-    ui.info_section("Key")
-    ui.info(ui.check, " up-to-date")
-    ui.info(SYMBOL_UNPUSHED, " unpushed changes")
-    ui.info(SYMBOL_UNCOMMITED, " uncommited changes")
-    ui.info(SYMBOL_UNPULLED, " unpulled changes (not yet implemented)")
+            status = SYMBOL_CLEAN
+
+        if repo.head.is_detached:
+            branch = "detached"
+        else:
+            branch = repo.active_branch
+
+        ui.info_count(
+            i,
+            len(repo_paths),
+            status,
+            f"[{branch}]",
+            repo.working_dir,
+        )
 
 
 if __name__ == "__main__":
