@@ -9,11 +9,15 @@ class Repository:
     path = None
     status = None
 
-    def __init__(self, path):
-        self.path = os.path.split(path)[0]
-        self.update()
+    def __init__(self, path: str):
+        self.__update_path(path)
+        self.__update_branch()
+        self.__update_status()
 
-    def update(self):
+    def __update_path(self, path: str):
+        self.path = os.path.split(path)[0]
+
+    def __update_branch(self):
         self.branch = (
             check_output(
                 ["git", "branch", "--show-current", "--no-color"], cwd=self.path
@@ -21,6 +25,8 @@ class Repository:
             .decode()
             .strip()
         )
+
+    def __update_status(self):
         status = (
             check_output(["git", "status", "--porcelain"], cwd=self.path)
             .decode()

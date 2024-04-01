@@ -1,18 +1,66 @@
+#--------------------------------------------------------------------------------------
+#
+#   Build System
+#
+#--------------------------------------------------------------------------------------
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+#--------------------------------------------------------------------------------------
+#
+#   Project Metadata
+#
+#--------------------------------------------------------------------------------------
 [project]
+description = "Provide an overview of all git repositories in your home directory."
+dynamic = ["version"]
 name = "git2know"
-version = "0.0.1"
+readme = "README.md"
+requires-python = ">=3.12"
+
 authors = [
     { name="Thomas Steinert", email="hello@chroni.cc" },
 ]
-description = "Provide an overview of all git repositories in your home directory."
-readme = "README.md"
-requires-python = ">=3.12"
+
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Version Control :: Git",
 ]
 
+dependencies = [
+    "cli-ui",
+]
+
+license = { file = "LICENSE" }
+
+#--------------------------------------------------------------------------------------
+#
+#   Project Scripts
+#
+#--------------------------------------------------------------------------------------
+[project.scripts]
+git2know = "git2know.main:main"
+
+#--------------------------------------------------------------------------------------
+#
+#   Project URLs
+#
+#--------------------------------------------------------------------------------------
 [project.urls]
+Documentation = "https://github.com/chronicc/git2know"
 Homepage = "https://github.com/chronicc/git2know"
 Issues = "https://github.com/chronicc/git2know/issues"
+Repository = "https://github.com/chronicc/git2know.git"
+
+#--------------------------------------------------------------------------------------
+#
+#   Project Dynamic Metadata
+#
+#--------------------------------------------------------------------------------------
+[tool.setuptools.dynamic]
+version = {attr = "git2know.VERSION"}

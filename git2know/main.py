@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from src.classes.repository import Repository
+from git2know.classes.repository import Repository
 from subprocess import check_call, check_output
 import cli_ui as ui
 import os
