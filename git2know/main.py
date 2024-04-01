@@ -16,9 +16,19 @@ SYMBOL_UNPULLED = ui.UnicodeSequence(ui.darkblue, "⤋", "-")
 
 
 def main():
-    ui.info_count(0, 2, "Creating index database")
-    check_call(["updatedb", "-l0", "-U", HOME, "-o", INDEXDB])
-    ui.info_count(1, 2, "Searching for git repositores")
+    check_call(
+        [
+            "updatedb",
+            "--add-prunenames",
+            ".cache .local",
+            "--database-root",
+            HOME,
+            "--output",
+            INDEXDB,
+            "--require-visibility",
+            "0",
+        ]
+    )
     common_args = ["-d", INDEXDB, "-r", "^.*/.git$"]
     if shutil.which("mlocate"):
         search_cmd = ["mlocate", "-q"]
