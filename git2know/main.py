@@ -1,60 +1,61 @@
 #!/usr/bin/env python3
 
-from git import GitCmdObjectDB, Repo
-from git2know import HOME, INDEXDB, SYMBOL_CLEAN, SYMBOL_DIRTY, ui
-from subprocess import check_call, check_output
-import shutil
+from git2know.index import Index
+from git2know.repository import RepositoryDataTable, RepositoryScreen
+from textual.app import App
+from textual.binding import Binding
+
+
+class Git2KnowApp(App):
+    """The main application."""
+
+    BINDINGS = [
+        Binding(
+            action="toggle_dark",
+            description="Toggle dark mode",
+            key="d",
+        ),
+        # TODO: Add help screen
+        # Binding(
+        #     action="help",
+        #     description="Show help screen",
+        #     key_display="?",
+        #     key="question_mark",
+        # ),
+    ]
+    SCREENS = {
+        "main": RepositoryScreen(),
+    }
+    TITLE = "git2know"
+
+    def toggle_dark(self) -> None:
+        self.dark = not self.dark
+
+    def on_mount(self) -> None:
+        self.index = Index()
+        self.push_screen("main")
+
+    def on_repository_screen_index_update_triggered(
+        self, message: RepositoryScreen.IndexUpdateTriggered
+    ) -> None:
+        print("Updating file index")
+        self.index.update()
+        self.query_one(RepositoryScreen).query_one(RepositoryDataTable).focus()
+        print("File index updated")
+
+    def on_repository_screen_repository_update_triggered(
+        self, message: RepositoryScreen.RepositoryUpdateTriggered
+    ) -> None:
+        print("Updating repositories")
+        self.query_one(RepositoryScreen).query_one(
+            RepositoryDataTable
+        ).repositories = self.index.read()
+        print("Repositories updated")
 
 
 def main():
-    ui.info("Updating index database")
-    check_call(
-        [
-            "updatedb",
-            "--add-prunenames",
-            ".cache .local",
-            "--database-root",
-            HOME,
-            "--output",
-            INDEXDB,
-            "--require-visibility",
-            "0",
-        ]
-    )
-    ui.info("Searching for git repositores")
-    common_args = ["-d", INDEXDB, "-r", "^.*/.git$"]
-    if shutil.which("mlocate"):
-        search_cmd = ["mlocate", "-q"]
-    elif shutil.which("locate"):
-        search_cmd = ["locate"]
-    else:
-        ui.error(
-            "No binary for reading the mlocate database found."
-            "Please install mlocate or locate."
-        )
-    repo_paths = check_output(search_cmd + common_args).decode().strip().split("\n")
-    ui.info("")
-    ui.info_section("Repositories")
-    for i, path in enumerate(repo_paths):
-        repo = Repo(path, odbt=GitCmdObjectDB)
-
-        if repo.is_dirty():
-            status = SYMBOL_DIRTY
-        else:
-            status = SYMBOL_CLEAN
-
-        if repo.head.is_detached:
-            branch = "detached"
-        else:
-            branch = repo.active_branch
-
-        ui.info_count(
-            i,
-            len(repo_paths),
-            status,
-            f"[{branch}]",
-            repo.working_dir,
-        )
+    app = Git2KnowApp()
+    app.run()
 
 
 if __name__ == "__main__":

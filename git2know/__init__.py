@@ -1,4 +1,3 @@
-import cli_ui as ui
 import os
 
 # --------------------------------------------------------------------------------------
@@ -21,7 +20,7 @@ INDEXDB = f"{HOME}/.cache/mlocate.db"
 #   Symbols
 #
 # --------------------------------------------------------------------------------------
-SYMBOL_CLEAN = ui.UnicodeSequence(ui.darkgreen, "✓", "c")
-SYMBOL_DIRTY = ui.UnicodeSequence(ui.darkred, "✗", "d")
-SYMBOL_UNPUSHED = ui.UnicodeSequence(ui.darkyellow, "⤊", "+")
-SYMBOL_UNPULLED = ui.UnicodeSequence(ui.darkblue, "⤋", "-")
+SYMBOL_CLEAN = "✓"
+SYMBOL_DIRTY = "✗"
+SYMBOL_UNPUSHED = "⤊"
+SYMBOL_UNPULLED = "⤋"
