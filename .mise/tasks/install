@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 # mise description="Install project dependencies"
 
+# Install dependencies
 mise run pip:install
+
+# Make the git2know command available in this environment
 pip install -e .
+
+# Install mlocate
+if command -v apt &> /dev/null; then
+    sudo apt install --no-install-recommends --yes mlocate
+fi
+if command -v yum &> /dev/null; then
+    sudo yum install --assumeyes mlocate
+fi
