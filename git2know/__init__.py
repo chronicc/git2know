@@ -13,7 +13,10 @@ VERSION = "0.1.0"
 #
 # --------------------------------------------------------------------------------------
 HOME = os.environ["HOME"]
-INDEXDB = f"{HOME}/.cache/mlocate.db"
+
+# Location of the index database
+INDEX_DIR = f"{HOME}/.cache/git2know"
+INDEX_FILE = f"{INDEX_DIR}/index.db"
 
 # --------------------------------------------------------------------------------------
 #

@@ -1,12 +1,17 @@
-import shutil
-from git2know import HOME, INDEXDB
+from git2know import HOME, INDEX_DIR, INDEX_FILE
 from subprocess import check_call, check_output
+import os
+import shutil
 
 
 class Index:
 
+    def __init__(self) -> None:
+        if not os.path.exists(INDEX_DIR):
+            os.makedirs(INDEX_DIR)
+
     def read(self) -> list[str]:
-        common_args = ["--database", INDEXDB, "--regexp", "^.*/.git$"]
+        common_args = ["--database", INDEX_FILE, "--regexp", "^.*/.git$"]
         if shutil.which("mlocate"):
             search_cmd = ["mlocate", "-q"]
         elif shutil.which("locate"):
@@ -30,7 +35,7 @@ class Index:
                 "--database-root",
                 HOME,
                 "--output",
-                INDEXDB,
+                INDEX_FILE,
                 "--require-visibility",
                 "0",
             ]
