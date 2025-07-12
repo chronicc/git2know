@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from config import config_from_toml, Configuration
-from git2know import CONFIG_LOCATIONS
 from git2know.index import Index
 from git2know.repository import RepositoryDataTable, RepositoryScreen
 from textual.app import App
@@ -30,7 +28,6 @@ class Git2KnowApp(App):
     }
     TITLE = "git2know"
 
-    config: Configuration
     index: Index
 
     def __init__(self) -> None:

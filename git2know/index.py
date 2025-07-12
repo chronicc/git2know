@@ -1,4 +1,4 @@
-from git2know import HOME, INDEX_DIR, INDEX_FILE
+from git2know import config
 from subprocess import check_call, check_output
 import os
 import shutil
@@ -7,11 +7,16 @@ import shutil
 class Index:
 
     def __init__(self) -> None:
-        if not os.path.exists(INDEX_DIR):
-            os.makedirs(INDEX_DIR)
+        if not os.path.exists(config.cache_dir):
+            os.makedirs(config.cache_dir)
 
     def read(self) -> list[str]:
-        common_args = ["--database", INDEX_FILE, "--regexp", "^.*/.git$"]
+        common_args = [
+            "--database",
+            f"{config.cache_dir}/index.db",
+            "--regexp",
+            "^.*/.git$",
+        ]
         if shutil.which("mlocate"):
             search_cmd = ["mlocate", "-q"]
         elif shutil.which("locate"):
