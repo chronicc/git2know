@@ -1,21 +1,18 @@
 [package]
 name = "git2know"
+description = "Assistant for handling many git repositories."
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+authors = [
+    "Kurt Thomas Steinert <hello@chroni.cc>",
+]
+readme = "README.md"
+license-file = "LICENSE"
+keywords = [
+    "assistant",
+    "git",
+    "overview",
+    "repository",
+]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-# Dependencies for the engine and the browser go here
 [dependencies]
-perseus = { git = "https://github.com/framesurge/perseus.git", features = [ "hydrate" ] }
-sycamore = "^0.8.1"
-serde = { version = "1", features = [ "derive" ] }
-serde_json = "1"
-
-# Engine-only dependencies go here
-[target.'cfg(engine)'.dependencies]
-tokio = { version = "1", features = [ "macros", "rt", "rt-multi-thread" ] }
-perseus-axum = { git = "https://github.com/framesurge/perseus.git", features = [ "dflt-server" ] }
-
-# Browser-only dependencies go here
-[target.'cfg(client)'.dependencies]
